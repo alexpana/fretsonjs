@@ -1,0 +1,10 @@
+{
+  "name": "fretson",
+  "version": "1.0.0",
+  "description": "Music theory library",
+  "repository": "git@gitlab.com:alexpana/fretsonjs.git",
+  "license": "WTFPL",
+  "devDependencies": {
+    "mocha": "^3.1.2"
+  }
+}
