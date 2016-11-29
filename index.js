@@ -56,7 +56,7 @@ var Fretson = new function () {
     this.SEMITONES_IN_OCTAVE = 12;
 
     this.notesInChord = function (rootNote, chordStr) {
-        return this.notesFromIntervals(rootNote, fretson.chords[chordStr].intervals);
+        return this.notesFromIntervals(rootNote, Fretson.chords[chordStr].intervals);
     };
 
     this.notesInScale = function (rootNoteStr, scaleStr) {

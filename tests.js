@@ -111,4 +111,14 @@ describe('Fretson', function () {
             assert.equal(fretson.intervalName(0), "root");
         });
     });
+
+    describe('notesInChord', function () {
+        it('works for major chords', function () {
+            var notes = fretson.notesInChord(fretson.note("G"), "major");
+            var noteNames = notes.map(function (note) {
+                return note.toString();
+            });
+            assert.deepEqual(noteNames, ["G4", "B4", "D5"]);
+        });
+    });
 });
