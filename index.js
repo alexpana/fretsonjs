@@ -4,7 +4,6 @@ exports.fretson = new function () {
 
     this.version = "1.0.0";
 
-    //noinspection JSUnusedGlobalSymbols
     this.tunings = {
         standard: {name: "Standard", representation: "E-A-D-G-B-E", strings: ["E2", "A2", "D3", "G3", "B3", "E4"]},
         drop_d: {name: "Drop D", representation: "D-A-D-G-B-E", strings: ["D2", "A2", "D3", "G3", "B3", "E4"]},
@@ -64,7 +63,11 @@ exports.fretson = new function () {
 
     };
 
-    this.notes = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
+    this.ordered_notes = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
+    this.all_notes = {
+        "C": 0, "C#": 1, "Db": 1, "D": 2, "D#": 3, "Eb": 3, "E": 4, "E#": 4, "Fb": 4, "F": 5, "F#": 6,
+        "Gb": 6, "G": 7, "G#": 8, "Ab": 8, "A": 9, "A#": 10, "Bb": 10, "B": 11, "Cb": 11
+    };
 
     this.scales = {
         major: {intervals: [0, 2, 4, 5, 7, 9, 11, 12]},
@@ -172,7 +175,7 @@ exports.fretson = new function () {
                 name = noteStr;
             }
 
-            if (this.notes.indexOf(name) == -1) {
+            if (typeof(this.all_notes[name]) === 'undefined') {
                 throw new Error("Invalid note name \"" + name + "\"");
             } else {
                 return name;
@@ -198,7 +201,7 @@ exports.fretson = new function () {
             }
 
             return new fretson.Note(
-                fretson.notes[fretson.notes.indexOf(this.name) + 1],
+                fretson.ordered_notes[fretson.all_notes[this.name] + 1],
                 this.octave);
         };
 
@@ -208,7 +211,7 @@ exports.fretson = new function () {
                 octaveDistance = otherNote.octave - this.octave;
             }
 
-            const semitonesDistance = fretson.notes.indexOf(otherNote.name) - fretson.notes.indexOf(this.name);
+            const semitonesDistance = fretson.all_notes[otherNote.name] - fretson.all_notes[this.name];
 
             return fretson.SEMITONES_IN_OCTAVE * octaveDistance + semitonesDistance;
         };
@@ -219,14 +222,14 @@ exports.fretson = new function () {
         this.addSemitones = function (semitones) {
             let octaveDistance = Number.parseInt(semitones / 12);
             let noteDistance = semitones % 12;
-            const noteIndex = fretson.notes.indexOf(this.name);
+            const noteIndex = fretson.ordered_notes.indexOf(this.name);
 
             if (noteIndex + noteDistance >= 12) {
                 noteDistance -= 12;
                 octaveDistance += 1;
             }
 
-            return new fretson.Note(fretson.notes[noteIndex + noteDistance], this.octave + octaveDistance);
+            return new fretson.Note(fretson.ordered_notes[noteIndex + noteDistance], this.octave + octaveDistance);
         };
 
         //noinspection JSUnusedGlobalSymbols

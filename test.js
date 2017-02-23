@@ -28,7 +28,7 @@ describe('Fretson', function () {
             it("throws for unknown note names", function () {
                 assert.throws(
                     function () {
-                        fretson.note("E#4")
+                        fretson.note("Ed4")
                     });
             });
         });
@@ -47,36 +47,48 @@ describe('Fretson', function () {
             });
         });
 
+        describe('tunings', function () {
+            it('use valid ordered_notes', function () {
+                let tunings = Object.keys(fretson.tunings);
+                tunings.forEach(function(tuning) {
+                    console.log(fretson.tunings[tuning]);
+                    fretson.tunings[tuning].strings.forEach(function(note) {
+                        fretson.note(note);
+                    })
+                });
+            });
+        });
+
         describe('semitonesTo', function () {
-            it('handles consecutive ordered notes', function () {
+            it('handles consecutive ordered ordered_notes', function () {
                 assert.equal(fretson.note("D").semitonesTo(fretson.note("D#")), 1);
                 assert.equal(fretson.note("E").semitonesTo(fretson.note("F")), 1);
             });
 
-            it('handles consecutive unordered notes', function () {
+            it('handles consecutive unordered ordered_notes', function () {
                 assert.equal(fretson.note("D").semitonesTo(fretson.note("C#")), -1);
                 assert.equal(fretson.note("E").semitonesTo(fretson.note("D#")), -1);
             });
 
-            it('handles ordered notes from same scale', function () {
+            it('handles ordered ordered_notes from same scale', function () {
                 assert.equal(fretson.note("E").semitonesTo(fretson.note("A")), 5);
                 assert.equal(fretson.note("C").semitonesTo(fretson.note("D#")), 3);
                 assert.equal(fretson.note("C").semitonesTo(fretson.note("B")), 11);
             });
 
-            it('handles unordered notes from same scale', function () {
+            it('handles unordered ordered_notes from same scale', function () {
                 assert.equal(fretson.note("A").semitonesTo(fretson.note("E")), -5);
                 assert.equal(fretson.note("D#").semitonesTo(fretson.note("C")), -3);
                 assert.equal(fretson.note("B").semitonesTo(fretson.note("C")), -11);
             });
 
-            it('handles ordered notes from different scales', function () {
+            it('handles ordered ordered_notes from different scales', function () {
                 assert.equal(fretson.note("A2").semitonesTo(fretson.note("E3")), 7);
                 assert.equal(fretson.note("A2").semitonesTo(fretson.note("A6")), 48);
                 assert.equal(fretson.note("C2").semitonesTo(fretson.note("B3")), 23);
             });
 
-            it('handles unordered notes from different scales', function () {
+            it('handles unordered ordered_notes from different scales', function () {
                 assert.equal(fretson.note("A3").semitonesTo(fretson.note("E2")), -17);
                 assert.equal(fretson.note("A6").semitonesTo(fretson.note("A2")), -48);
                 assert.equal(fretson.note("C3").semitonesTo(fretson.note("B2")), -1);
