@@ -1,7 +1,7 @@
-var assert = require('assert');
-var it = require("mocha").it;
-var describe = require("mocha").describe;
-var fretson = require('./index.js').fretson;
+const assert = require("assert");
+const it = require("mocha").it;
+const describe = require("mocha").describe;
+const fretson = require('./index.js').fretson;
 
 describe('Fretson', function () {
 
@@ -50,8 +50,8 @@ describe('Fretson', function () {
         describe('tunings', function () {
             it('use valid ordered_notes', function () {
                 let tunings = Object.keys(fretson.tunings);
-                tunings.forEach(function(tuning) {
-                    fretson.tunings[tuning].strings.forEach(function(note) {
+                tunings.forEach(function (tuning) {
+                    fretson.tunings[tuning].strings.forEach(function (note) {
                         fretson.note(note);
                     })
                 });
@@ -125,11 +125,40 @@ describe('Fretson', function () {
 
     describe('notesInChord', function () {
         it('works for major chords', function () {
-            var notes = fretson.notesInChord(fretson.note("G"), "major");
-            var noteNames = notes.map(function (note) {
+            const notes = fretson.notesInChord(fretson.note("G"), "major");
+            const noteNames = notes.map(function (note) {
                 return note.toString();
             });
             assert.deepEqual(noteNames, ["G4", "B4", "D5"]);
+        });
+    });
+
+    describe('notesInScale', function () {
+        it('works for Gmaj scale', function () {
+            const notes = fretson.notesInScale(fretson.note("G"), "major");
+            const noteNames = notes.map(function (note) {
+                return note.toString();
+            });
+            assert.deepEqual(noteNames, ["G4", "A4", "B4", "C5", "D5", "E5", "F#5"]);
+        });
+    });
+
+    describe('notesInScaleMode', function () {
+        it('works for F dorian scale', function () {
+            const notes = fretson.notesInScaleMode(fretson.note("A"), "dorian");
+            const noteNames = notes.map(function (note) {
+                return note.toString();
+            });
+            assert.deepEqual(noteNames, ["A4", "B4", "C5", "D5", "E5", "F#5", "G5"]);
+        });
+    });
+
+    describe('Note.equals', function () {
+        it('works with name and octave', function () {
+            assert.equal(fretson.note("G4").equals(new fretson.Note("G", 4)), true);
+            assert.equal(fretson.note("G4").equals(new fretson.Note("D", 4)), false);
+            assert.equal(fretson.note("G3").equals(new fretson.Note("G", 3)), true);
+            assert.equal(fretson.note("G3").equals(new fretson.Note("G", 2)), false);
         });
     });
 });

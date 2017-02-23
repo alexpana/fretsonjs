@@ -38,9 +38,9 @@ exports.fretson = new function () {
     };
 
     this.scales = {
-        major: {intervals: [0, 2, 4, 5, 7, 9, 11, 12]},
-        minor: {intervals: [0, 2, 3, 5, 7, 8, 10, 12]},
-        chromatic: {intervals: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]}
+        major: {intervals: [0, 2, 4, 5, 7, 9, 11]},
+        minor: {intervals: [0, 2, 3, 5, 7, 8, 10]},
+        chromatic: {intervals: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}
     };
 
     this.scaleModes = {
@@ -87,12 +87,10 @@ exports.fretson = new function () {
         return this.notesFromIntervals(rootNote, this.chords[chordStr].intervals);
     };
 
-    //noinspection JSUnusedGlobalSymbols
     this.notesInScale = function (rootNote, scaleStr) {
         return this.notesFromIntervals(rootNote, this.scales[scaleStr].intervals);
     };
 
-    //noinspection JSUnusedGlobalSymbols
     this.notesInScaleMode = function (rootNote, mode) {
         return this.notesFromIntervals(rootNote, this.scaleModes[mode].intervals);
     };
@@ -200,7 +198,6 @@ exports.fretson = new function () {
             return new fretson.Note(fretson.ordered_notes[noteIndex + noteDistance], this.octave + octaveDistance);
         };
 
-        //noinspection JSUnusedGlobalSymbols
         this.equals = function (other) {
             return this.name == other.name && this.octave == other.octave;
         };
