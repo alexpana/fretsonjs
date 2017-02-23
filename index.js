@@ -1,29 +1,85 @@
-var Fretson = new function () {
+exports.fretson = new function () {
 
-    this.version = [1, 0, 0];
+    const fretson = this;
 
-    this.guitarTunings = {
-        standard: ["E2", "A2", "D3", "G3", "B3", "E4"],
-        dropD: ["D2", "A2", "D3", "G3", "B3", "E4"],
-        dropC: ["C2", "G2", "C3", "F3", "A3", "D4"]
+    this.version = "1.0.0";
+
+    //noinspection JSUnusedGlobalSymbols
+    this.tunings = {
+        standard: {name: "Standard", representation: "E-A-D-G-B-E", strings: ["E2", "A2", "D3", "G3", "B3", "E4"]},
+        drop_d: {name: "Drop D", representation: "D-A-D-G-B-E", strings: ["D2", "A2", "D3", "G3", "B3", "E4"]},
+        double_drop_d: {
+            name: "Double Drop D",
+            representation: "D-A-D-G-B-D",
+            strings: ["D2", "A2", "D3", "G3", "B3", "D4"]
+        },
+        d_modal_tuning: {
+            name: "D Modal Tuning",
+            representation: "D-A-D-G-A-D",
+            strings: ["D2", "A2", "D3", "G3", "A3", "D4"]
+        },
+        drop_c: {name: "Drop C", representation: "C-G-C-F-A-D", strings: ["C2", "G2", "C3", "F3", "A3", "D4"]},
+        drop_b: {name: "Dropped B", representation: "B-F#-B-E-G#-C#", strings: ["B2", "F#2", "B3", "E3", "G#3", "C#4"]},
+        drop_a: {name: "Dropped A", representation: "A-E-A-D-F#-A", strings: ["A2", "E2", "A3", "D3", "F#3", "A4"]},
+        a_tuning: {name: "A Tuning", representation: "A-D-G-C-E-A", strings: ["A2", "D2", "G3", "C3", "E2", "A4"]},
+        eb_tuning: {
+            name: "Eb Tuning",
+            representation: "Eb-Ab-Db-Gb-Bb-Eb",
+            strings: ["Eb2", "Ab2", "Db3", "Gb3", "Bb3", "Eb4"]
+        },
+        d_tuning: {name: "D Tuning", representation: "D-G-C-F-A-D", strings: ["D2", "G2", "C3", "F3", "A3", "D4"]},
+        db_tuning: {
+            name: "Db Tuning",
+            representation: "Db-Gb-Cb-Fb-Ab-Db",
+            strings: ["Db2", "Gb2", "Cb3", "Fb3", "Ab3", "Db4"]
+        },
+        c: {name: "C Tuning", representation: "C-F-Bb-Eb-G-C", strings: ["C2", "F2", "Bb3", "Eb3", "G3", "C4"]},
+        b_standard: {
+            name: "B Standard Tuning",
+            representation: "B-E-A-D-F#-B",
+            strings: ["B2", "E2", "A3", "D3", "F#3", "B4"]
+        },
+        bb: {
+            name: "Bb Tuning",
+            representation: "Eb-Ab-Db-Gb-Bb-Eb",
+            strings: ["Eb2", "Ab2", "Db3", "Gb3", "Bb3", "Eb4"]
+        },
+        g: {name: "G Tuning", representation: "Eb-Ab-Db-Gb-Bb-Eb", strings: ["Eb2", "Ab2", "Db3", "Gb3", "Bb3", "Eb4"]},
+        open_a: {name: "Open A Tuning", representation: "E-A-E-A-C#-E", strings: ["E2", "A2", "E3", "A3", "C#3", "E4"]},
+        open_c: {name: "Open C Tuning", representation: "C-G-C-G-C-E", strings: ["C2", "G2", "C3", "G3", "C3", "E4"]},
+        open_d: {name: "Open D Tuning", representation: "D-A-D-F#-A-D", strings: ["D2", "A2", "D3", "F#3", "A3", "D4"]},
+        open_db: {
+            name: "Open Db Tuning",
+            representation: "Db-Ab-Db-F-Ab-Db",
+            strings: ["Db2", "Ab2", "Db3", "F3", "Ab3", "Db4"]
+        },
+        open_e: {name: "Open E Tuning", representation: "E-B-E-G#-B-E", strings: ["E2", "B2", "E3", "G#3", "B3", "E4"]},
+        open_f: {name: "Open F Tuning", representation: "F-A-C-F-C-F", strings: ["F2", "A2", "C3", "F3", "C3", "F4"]},
+        open_g: {name: "Open G Tuning", representation: "D-G-D-G-B-D", strings: ["D2", "G2", "D3", "G3", "B3", "D4"]},
+        six_string_bass: {
+            name: "6-string Bass",
+            representation: "B-E-A-D-G-C",
+            strings: ["B2", "E2", "A3", "D3", "G3", "C4"]
+        },
+
     };
 
     this.notes = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
 
     this.scales = {
-        major: {intervals: [0, 2, 2, 1, 2, 2, 2, 1]},
-        minor: {intervals: [0, 2, 1, 2, 2, 1, 2, 2]},
-        chromatic: {intervals: [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]}
+        major: {intervals: [0, 2, 4, 5, 7, 9, 11, 12]},
+        minor: {intervals: [0, 2, 3, 5, 7, 8, 10, 12]},
+        chromatic: {intervals: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]}
     };
 
     this.scaleModes = {
-        ionian: {offset: 0, intervals: [0, 2, 2, 1, 2, 2, 2, 1]},
-        dorian: {offset: 1, intervals: [0, 2, 1, 2, 2, 2, 1, 2]},
-        phrygian: {offset: 2, intervals: [0, 1, 2, 2, 2, 1, 2, 2]},
-        lydian: {offset: 3, intervals: [0, 2, 2, 2, 1, 2, 2, 1]},
-        mixolydian: {offset: 4, intervals: [0, 2, 2, 1, 2, 2, 1, 2]},
-        aeolian: {offset: 5, intervals: [0, 2, 1, 2, 2, 1, 2, 2]},
-        locrian: {offset: 6, intervals: [0, 1, 2, 2, 1, 2, 2, 2]}
+        ionian: {offset: 0, intervals: [0, 2, 4, 5, 7, 9, 11]},
+        dorian: {offset: 1, intervals: [0, 2, 3, 5, 7, 9, 10]},
+        phrygian: {offset: 2, intervals: [0, 1, 3, 5, 7, 8, 10]},
+        lydian: {offset: 3, intervals: [0, 2, 4, 6, 7, 9, 11]},
+        mixolydian: {offset: 4, intervals: [0, 2, 4, 5, 7, 9, 10]},
+        aeolian: {offset: 5, intervals: [0, 2, 3, 5, 7, 8, 10]},
+        locrian: {offset: 6, intervals: [0, 1, 3, 5, 6, 8, 10]}
     };
 
     this.intervals = {
@@ -42,7 +98,8 @@ var Fretson = new function () {
         12: {name: "octave", alternateNames: [], short: "R", distance: 12}
     };
 
-    this.noteNames = {A: "La", B: "Si", C: "Do", D: "Re", E: "Mi", F: "Fa", G: "Sol"};
+    //noinspection JSUnusedGlobalSymbols
+    this.noteName = {A: "La", B: "Si", C: "Do", D: "Re", E: "Mi", F: "Fa", G: "Sol"};
 
     this.chords = {
         major: {intervals: [0, 4, 7]},
@@ -56,38 +113,17 @@ var Fretson = new function () {
     this.SEMITONES_IN_OCTAVE = 12;
 
     this.notesInChord = function (rootNote, chordStr) {
-        return this.notesFromIntervals(rootNote, Fretson.chords[chordStr].intervals);
+        return this.notesFromIntervals(rootNote, this.chords[chordStr].intervals);
     };
 
-    this.notesInScale = function (rootNoteStr, scaleStr) {
-        var scaleIntervals = this.scales[scaleStr].intervals;
-
-        var currentNote = this.__noteStandardForm(rootNoteStr);
-        var notes = [currentNote];
-
-        scaleIntervals.forEach(function (interval) {
-            var nextNote = fretson.addSemitones(currentNote, interval);
-            notes.push(nextNote);
-            currentNote = nextNote;
-        });
-
-        return notes;
+    //noinspection JSUnusedGlobalSymbols
+    this.notesInScale = function (rootNote, scaleStr) {
+        return this.notesFromIntervals(rootNote, this.scales[scaleStr].intervals);
     };
 
-    this.notesInScaleMode = function (rootNoteStr, mode) {
-        var scaleMode = this.scaleModes[mode];
-        var intervals = scaleMode.intervals;
-
-        var currentNote = this.__noteStandardForm(this.notesInScale(rootNoteStr, "major")[scaleMode.offset]);
-        var notes = [currentNote];
-
-        intervals.forEach(function (interval) {
-            var nextNote = fretson.addSemitones(currentNote, interval);
-            notes.push(nextNote);
-            currentNote = nextNote;
-        });
-
-        return notes;
+    //noinspection JSUnusedGlobalSymbols
+    this.notesInScaleMode = function (rootNote, mode) {
+        return this.notesFromIntervals(rootNote, this.scaleModes[mode].intervals);
     };
 
     this.notesFromIntervals = function (rootNote, intervals) {
@@ -96,50 +132,23 @@ var Fretson = new function () {
         });
     };
 
-    this.generateNotesFromIntervals = function (rootNoteStr, intervals, count) {
-        if (count <= 0) {
-            return [];
-        }
-
-        var lastNote = this.__noteStandardForm(rootNoteStr);
-        var result = [lastNote];
-
-        for (var i = 0; i < count - 1; ++i) {
-            var intervalDistance = intervals[i % intervals.length];
-            lastNote = this.addSemitones(lastNote, intervalDistance);
-            result.push(lastNote);
-        }
-
-        return result;
+    this.__intervalName = function (intervalLength) {
+        return this.intervals[intervalLength].name;
     };
 
-    this.intervalName = function (intervalLength) {
-        return this.intervals[intervalLength % 12].name;
-    };
-
-    this.noteFromInterval = function (rootNoteStr, noteStr) {
-        var note = new this.Note(noteStr);
-        note.interval.root = new this(rootNoteStr);
-        note.interval.distance = Fretson.semitonesTo(rootNoteStr, noteStr);
-        return note;
-    };
-
-    this.noteFromNameAndOctave = function (name, octave) {
-        var note = new this.Note();
-        note.name = name;
-        note.octave = octave;
-        return note;
+    this.note = function (noteStr) {
+        return new this.Note(this.__noteName(noteStr), this.__noteOctave(noteStr));
     };
 
     /**
-     * Returns true if the note string representation noteStr contains an octave number.
+     * Returns true if the rootNote string representation noteStr contains an octave number.
      */
     this.__noteHasOctave = function (noteStr) {
         return !Number.isNaN(Number.parseInt(noteStr[noteStr.length - 1]));
     };
 
     /**
-     * Returns the octave of a note if specified, or
+     * Returns the octave of a rootNote if specified, or
      * else returns the default_octave parameter value.
      */
     this.__noteOctave = function (noteStr, default_octave) {
@@ -148,7 +157,7 @@ var Fretson = new function () {
     };
 
     /**
-     * Returns the name of a note represented by a string or an object
+     * Returns the name of a rootNote represented by a string or an object
      */
     this.__noteName = function (noteStr) {
         if (noteStr == undefined) {
@@ -156,7 +165,7 @@ var Fretson = new function () {
         }
 
         if (typeof noteStr === "string") {
-            var name = "";
+            let name = "";
             if (this.__noteHasOctave(noteStr)) {
                 name = noteStr.substr(0, noteStr.length - 1);
             } else {
@@ -177,65 +186,59 @@ var Fretson = new function () {
         return undefined;
     };
 
-    this.note = function (noteStr) {
-        return new Note(this.__noteName(noteStr), this.__noteOctave(noteStr));
+    this.Note = function (name, octave) {
+
+        this.name = name;
+
+        this.octave = octave;
+
+        this.nextNote = function () {
+            if (this.name == "B") {
+                return new fretson.Note("C", this.octave ? this.octave + 1 : this.octave);
+            }
+
+            return new fretson.Note(
+                fretson.notes[fretson.notes.indexOf(this.name) + 1],
+                this.octave);
+        };
+
+        this.semitonesTo = function (otherNote) {
+            let octaveDistance = 0;
+            if (otherNote.octave && this.octave) {
+                octaveDistance = otherNote.octave - this.octave;
+            }
+
+            const semitonesDistance = fretson.notes.indexOf(otherNote.name) - fretson.notes.indexOf(this.name);
+
+            return fretson.SEMITONES_IN_OCTAVE * octaveDistance + semitonesDistance;
+        };
+
+        /**
+         * Returns a description for the rootNote that is semitones apart from the noteStr.
+         */
+        this.addSemitones = function (semitones) {
+            let octaveDistance = Number.parseInt(semitones / 12);
+            let noteDistance = semitones % 12;
+            const noteIndex = fretson.notes.indexOf(this.name);
+
+            if (noteIndex + noteDistance >= 12) {
+                noteDistance -= 12;
+                octaveDistance += 1;
+            }
+
+            return new fretson.Note(fretson.notes[noteIndex + noteDistance], this.octave + octaveDistance);
+        };
+
+        //noinspection JSUnusedGlobalSymbols
+        this.equals = function (other) {
+            return this.name == other.name && this.octave == other.octave;
+        };
+
+        /**
+         * Joins the name and the octave of a rootNote into a string representation.
+         */
+        this.toString = function () {
+            return this.name + this.octave;
+        };
     };
 }();
-
-var Note = function (name, octave) {
-
-    this.name = name;
-
-    this.octave = octave;
-
-    this.nextNote = function () {
-        if (this.name == "B") {
-            return new Note("C", this.octave + 1);
-        }
-
-        return new Note(
-            Fretson.notes[Fretson.notes.indexOf(this.name) + 1],
-            this.octave);
-    };
-
-    this.semitonesTo = function (otherNote) {
-        var octaveDistance = otherNote.octave - this.octave;
-        var semitonesDistance = Fretson.notes.indexOf(otherNote.name) - Fretson.notes.indexOf(this.name);
-
-        return Fretson.SEMITONES_IN_OCTAVE * octaveDistance + semitonesDistance;
-    };
-
-    /**
-     * Returns a description for the note that is semitones apart from the noteStr.
-     */
-    this.addSemitones = function (semitones) {
-        var octaveDistance = Number.parseInt(semitones / 12);
-        var noteDistance = semitones % 12;
-
-        var noteIndex = Fretson.notes.indexOf(this.name);
-
-        if (noteIndex + noteDistance >= 12) {
-            noteDistance -= 12;
-            octaveDistance += 1;
-        }
-
-        return new Note(Fretson.notes[noteIndex + noteDistance], this.octave + octaveDistance);
-    };
-
-    this.equals = function (other) {
-        return this.name == other.name && this.octave == other.octave;
-    };
-
-    /**
-     * Joins the name and the octave of a note into a string representation.
-     */
-    this.toString = function () {
-        return this.name + this.octave;
-    };
-};
-
-Fretson.Note = Note;
-
-if (typeof module !== 'undefined' && module.exports != null) {
-    module.exports = Fretson;
-}

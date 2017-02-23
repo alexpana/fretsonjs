@@ -1,7 +1,7 @@
 var assert = require('assert');
 var it = require("mocha").it;
 var describe = require("mocha").describe;
-var fretson = require('./index.js');
+var fretson = require('./index.js').fretson;
 
 describe('Fretson', function () {
 
@@ -106,9 +106,9 @@ describe('Fretson', function () {
 
     describe('intervalName', function () {
         it('returns correct interval names', function () {
-            assert.equal(fretson.intervalName(3), "minor-third");
-            assert.equal(fretson.intervalName(10), "minor-seventh");
-            assert.equal(fretson.intervalName(0), "root");
+            assert.equal(fretson.__intervalName(3), "minor-third");
+            assert.equal(fretson.__intervalName(10), "minor-seventh");
+            assert.equal(fretson.__intervalName(0), "root");
         });
     });
 
