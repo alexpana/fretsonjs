@@ -51,7 +51,6 @@ describe('Fretson', function () {
             it('use valid ordered_notes', function () {
                 let tunings = Object.keys(fretson.tunings);
                 tunings.forEach(function(tuning) {
-                    console.log(fretson.tunings[tuning]);
                     fretson.tunings[tuning].strings.forEach(function(note) {
                         fretson.note(note);
                     })
