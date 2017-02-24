@@ -15,31 +15,19 @@ const commands = parser.addSubparsers({
     metavar: ''
 });
 
-const scale_mode_parser = commands.addParser('mode', {help: "generates a scale mode", addHelp: true});
-scale_mode_parser.addArgument(['root'], {help: 'The root note', choices: Object.keys(fretson.all_notes)});
-scale_mode_parser.addArgument(['name'], {help: 'The name of the scale mode', choices: Object.keys(fretson.scaleModes)});
-scale_mode_parser.addArgument(['--fretboard'], {
-    help: 'Shows the notes on the fretboard',
-    default: 0
-});
-
-const scale_parser = commands.addParser('scale', {help: "generates a scale", addHelp: true});
-scale_parser.addArgument(['root'], {help: 'The root note', choices: Object.keys(fretson.all_notes)});
-scale_parser.addArgument(['name'], {help: 'The name of the scale', choices: Object.keys(fretson.scales)});
-scale_parser.addArgument(['--fretboard'], {
-    help: 'Shows the notes on the fretboard',
-    default: 0
-});
-
-const chord_parser = commands.addParser('chord', {help: "generates a chord", addHelp: true});
-chord_parser.addArgument(['root'], {help: 'The root note', choices: Object.keys(fretson.all_notes)});
-chord_parser.addArgument(['name'], {help: 'The name of the chord', choices: Object.keys(fretson.chords)});
-chord_parser.addArgument(['--fretboard'], {
-    help: 'Shows the notes on the fretboard',
-    default: 0
+const show_parser = commands.addParser('show', {help: "shows a scale / mode / chord", addHelp: true});
+show_parser.addArgument(['type'], {help: 'What to show', choices: ['scale', 'mode', 'chord']});
+show_parser.addArgument(['root'], {help: 'The root note', choices: Object.keys(fretson.all_notes)});
+show_parser.addArgument(['name'], {help: 'The name of the scale / mode / chord'});
+show_parser.addArgument(['--fretboard'], {
+    help: 'Shows the notes on the fretboard, up to FRET number of frets',
+    metavar: 'FRET',
+    default: 12
 });
 
 commands.addParser('list-scales', {help: "lists all the available scales", addHelp: true});
+
+commands.addParser('list-chords', {help: "lists all the available chords", addHelp: true});
 
 const explain_parser = commands.addParser('explain', {help: "explains a scale / mode / chord", addHelp: true});
 explain_parser.addArgument(['what'], {help: 'What to explain', choices: ['scale', 'mode', 'chord']});
@@ -49,10 +37,8 @@ explain_parser.addArgument(['name'], {help: 'The name of the scale / mode / chor
 const args = parser.parseArgs();
 
 switch (args['command']) {
-    case "chord":
-    case "scale":
-    case "mode":
-        let notes = get_notes(args['command'], args['root'], args['name']);
+    case "show":
+        let notes = get_notes(args['type'], args['root'], args['name']);
         let fretboard = Number.parseInt(args['fretboard']);
         if (fretboard > 0) {
             console.log(generate_fretboard(fretson.tunings.standard, notes.map(note => note.name), fretboard));
@@ -62,6 +48,9 @@ switch (args['command']) {
         break;
     case "list-scales":
         console.log(Object.keys(fretson.scales).join("\n"));
+        break;
+    case "list-chords":
+        console.log(Object.keys(fretson.chords).join("\n"));
         break;
     case "explain":
         switch (args['what']) {
@@ -118,9 +107,6 @@ function get_notes(mode, root, name) {
     }
     return [];
 }
-
-
-// console.log(generate_fretboard(fretson.tunings.standard, fretson.notesInScale(fretson.note("G"), "major").map(note => note.name), 12));
 
 function notes_to_string(notes) {
     return notes.map(note => note.name).reduce((acc, note) => acc + " " + note);
