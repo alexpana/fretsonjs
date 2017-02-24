@@ -1,7 +1,7 @@
 const assert = require("assert");
 const it = require("mocha").it;
 const describe = require("mocha").describe;
-const fretson = require('./index.js').fretson;
+const fretson = require('./index.js');
 
 describe('Fretson', function () {
 

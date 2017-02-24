@@ -1,4 +1,4 @@
-exports.fretson = new function () {
+module.exports = new function () {
 
     const fretson = this;
 
