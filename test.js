@@ -155,10 +155,10 @@ describe('Fretson', function () {
 
     describe('Note.equals', function () {
         it('works with name and octave', function () {
-            assert.equal(fretson.note("G4").equals(new fretson.Note("G", 4)), true);
-            assert.equal(fretson.note("G4").equals(new fretson.Note("D", 4)), false);
-            assert.equal(fretson.note("G3").equals(new fretson.Note("G", 3)), true);
-            assert.equal(fretson.note("G3").equals(new fretson.Note("G", 2)), false);
+            assert.equal(fretson.note("G4").equals(fretson.noteFromObj({name: "G", octave: 4})), true);
+            assert.equal(fretson.note("G4").equals(fretson.noteFromObj({name: "D", octave: 4})), false);
+            assert.equal(fretson.note("G3").equals(fretson.noteFromObj({name: "G", octave: 3})), true);
+            assert.equal(fretson.note("G3").equals(fretson.noteFromObj({name: "G", octave: 2})), false);
         });
     });
 });

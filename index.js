@@ -211,7 +211,11 @@ module.exports = new function () {
     };
 
     this.note = function (noteStr) {
-        return new this.Note(this.__noteName(noteStr), this.__noteOctave(noteStr));
+        return new Note(this.__noteName(noteStr), this.__noteOctave(noteStr));
+    };
+
+    this.noteFromObj = function (noteObject) {
+        return new Note(noteObject.name, noteObject.octave || 4);
     };
 
     /**
@@ -260,23 +264,23 @@ module.exports = new function () {
         return undefined;
     };
 
-    this.Note = function (name, octave) {
+    class Note {
+        constructor(name, octave) {
+            this.name = name;
+            this.octave = octave;
+        }
 
-        this.name = name;
-
-        this.octave = octave;
-
-        this.nextNote = function () {
+        nextNote() {
             if (this.name == "B") {
-                return new fretson.Note("C", this.octave ? this.octave + 1 : this.octave);
+                return new Note("C", this.octave ? this.octave + 1 : this.octave);
             }
 
-            return new fretson.Note(
+            return new Note(
                 fretson.ordered_notes[fretson.all_notes[this.name] + 1],
                 this.octave);
         };
 
-        this.semitonesTo = function (otherNote) {
+        semitonesTo(otherNote) {
             let octaveDistance = 0;
             if (otherNote.octave && this.octave) {
                 octaveDistance = otherNote.octave - this.octave;
@@ -290,7 +294,7 @@ module.exports = new function () {
         /**
          * Returns a description for the rootNote that is semitones apart from the noteStr.
          */
-        this.addSemitones = function (semitones) {
+        addSemitones(semitones) {
             let octaveDistance = Number.parseInt(semitones / 12);
             let noteDistance = semitones % 12;
             const noteIndex = fretson.ordered_notes.indexOf(this.name);
@@ -300,18 +304,18 @@ module.exports = new function () {
                 octaveDistance += 1;
             }
 
-            return new fretson.Note(fretson.ordered_notes[noteIndex + noteDistance], this.octave + octaveDistance);
+            return new Note(fretson.ordered_notes[noteIndex + noteDistance], this.octave + octaveDistance);
         };
 
-        this.equals = function (other) {
+        equals(other) {
             return this.name == other.name && this.octave == other.octave;
         };
 
         /**
          * Joins the name and the octave of a rootNote into a string representation.
          */
-        this.toString = function () {
+        toString() {
             return this.name + this.octave;
         };
-    };
+    }
 }();
