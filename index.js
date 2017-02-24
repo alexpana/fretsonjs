@@ -139,7 +139,6 @@ module.exports = new function () {
         eight_tone_spanish: {name: "Eight Tone Spanish", intervals: [0, 1, 3, 4, 5, 6, 8, 10]},
         enigmatic: {name: "Enigmatic", intervals: [0, 1, 4, 6, 8, 10, 11]},
         ethiopian_a_raray: {name: "Ethiopian (A raray)", intervals: [0, 2, 4, 5, 7, 9, 11]},
-        ethiopian_geez: {name: "Ethiopian (Geez)", intervals: [null]},
         half_diminished_locrian: {name: "Half Diminished (Locrian)", intervals: [0, 1, 3, 5, 6, 8, 10]},
         hawaiian: {name: "Hawaiian", intervals: [0, 2, 3, 5, 7, 9, 11]},
         hindu: {name: "Hindu", intervals: [0, 2, 4, 5, 7, 8, 10]},
