@@ -47,7 +47,7 @@ switch (args['command']) {
         }
         break;
     case "list-scales":
-        console.log(Object.keys(fretson.scales).join("\n"));
+        console.log(Object.keys(fretson.scales).map(scale => right_pad(scale, 30) + interval_names(fretson.scales[scale].intervals)).join("\n"));
         break;
     case "list-chords":
         console.log(Object.keys(fretson.chords).join("\n"));
@@ -70,6 +70,13 @@ switch (args['command']) {
                 break;
         }
         break;
+}
+
+function right_pad(str, count) {
+    while (count > str.length) {
+        str = str + " ";
+    }
+    return str;
 }
 
 function interval_names(intervals) {
