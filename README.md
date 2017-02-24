@@ -15,7 +15,7 @@ $ npm install -g fretsonjs
 Show the composition of a chord on the fretboard (also works with scales and scale modes)
 ```
 $ fretson show chord C# major --fretboard 12 --tuning "Drop D"
-     .           .           .           .                 :
+                 .           .           .           .                 :
 E |--F--|-----|-----|--G#-|-----|-----|-----|-----|--C#-|-----|-----|-----|
 B |-----|--C#-|-----|-----|-----|--F--|-----|-----|--G#-|-----|-----|-----|
 G |--G#-|-----|-----|-----|-----|--C#-|-----|-----|-----|--F--|-----|-----|
