@@ -2,6 +2,22 @@
 
 let fretson = require("../");
 
-console.log(process.argv);
+let mode = process.argv[2];
+let note = fretson.note(process.argv[3]);
+let scale = process.argv[4];
 
-console.log("Running fretson v" + fretson.version);
+switch (mode) {
+    case "chord":
+        console.log(notes_to_string(fretson.notesInChord(note, scale)));
+        break;
+    case "scale":
+        console.log(notes_to_string(fretson.notesInScale(note, scale)));
+        break;
+    case "mode":
+        console.log(notes_to_string(fretson.notesInScaleMode(note, scale)));
+        break;
+}
+
+function notes_to_string(notes) {
+    return notes.map(note => note.name).reduce((acc, note) => acc + " " + note);
+}
