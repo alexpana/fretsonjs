@@ -161,4 +161,11 @@ describe('Fretson', function () {
             assert.equal(fretson.note("G3").equals(fretson.noteFromObj({name: "G", octave: 2})), false);
         });
     });
+
+    describe('tuningForName', function () {
+        it('works', function () {
+            assert.equal(fretson.tuningFromName("Drop D"), fretson.tunings.drop_d);
+            assert.equal(fretson.tuningFromName("Drop D"), fretson.tunings.drop_d);
+        });
+    });
 });

@@ -219,6 +219,10 @@ module.exports = new function () {
 
     this.SEMITONES_IN_OCTAVE = 12;
 
+    this.tuningFromName = function (tuning_name) {
+        return this.tunings[Object.keys(this.tunings).filter(tuning => this.tunings[tuning].name === tuning_name)];
+    };
+
     this.notesInChord = function (rootNote, chordStr) {
         return this.notesFromIntervals(rootNote, this.chords[chordStr].intervals);
     };
