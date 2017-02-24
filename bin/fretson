@@ -20,9 +20,7 @@ scale_mode_parser.addArgument(['root'], {help: 'The root note', choices: Object.
 scale_mode_parser.addArgument(['name'], {help: 'The name of the scale mode',});
 scale_mode_parser.addArgument(['--fretboard'], {
     help: 'Shows the notes on the fretboard',
-    action: 'storeConst',
-    constant: true,
-    default: false
+    default: 0
 });
 
 const scale_parser = commands.addParser('scale', {help: "generates a scale", addHelp: true});
@@ -30,9 +28,7 @@ scale_parser.addArgument(['root'], {help: 'The root note', choices: Object.keys(
 scale_parser.addArgument(['name'], {help: 'The name of the scale', choices: Object.keys(fretson.scales)});
 scale_parser.addArgument(['--fretboard'], {
     help: 'Shows the notes on the fretboard',
-    action: 'storeConst',
-    constant: true,
-    default: false
+    default: 0
 });
 
 const chord_parser = commands.addParser('chord', {help: "generates a chord", addHelp: true});
@@ -40,9 +36,7 @@ chord_parser.addArgument(['root'], {help: 'The root note', choices: Object.keys(
 chord_parser.addArgument(['name'], {help: 'The name of the chord', choices: Object.keys(fretson.chords)});
 chord_parser.addArgument(['--fretboard'], {
     help: 'Shows the notes on the fretboard',
-    action: 'storeConst',
-    constant: true,
-    default: false
+    default: 0
 });
 
 commands.addParser('list-scales', {help: "lists all the available scales", addHelp: true});
@@ -54,8 +48,9 @@ switch (args['command']) {
     case "scale":
     case "mode":
         let notes = get_notes(args['command'], args['root'], args['name']);
-        if (args['fretboard']) {
-            console.log(generate_fretboard(fretson.tunings.standard, notes.map(note => note.name), 12));
+        let fretboard = Number.parseInt(args['fretboard']);
+        if (fretboard > 0) {
+            console.log(generate_fretboard(fretson.tunings.standard, notes.map(note => note.name), fretboard));
         } else {
             console.log(notes_to_string(notes));
         }
@@ -97,7 +92,7 @@ function generate_fretboard_string_meta(fret_count) {
 
     let result = "    ";
     for (i = 0; i < fret_count; ++i) {
-        result += "  " + meta[i % 13] + "   ";
+        result += "  " + meta[i % 12] + "   ";
     }
     return result;
 }
