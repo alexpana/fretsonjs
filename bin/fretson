@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 let fretson = require("../");
+let colors = require('colors');
 
 const ArgumentParser = require('argparse').ArgumentParser;
 const parser = new ArgumentParser({
@@ -17,34 +18,100 @@ const commands = parser.addSubparsers({
 const scale_mode_parser = commands.addParser('mode', {help: "generates a scale mode", addHelp: true});
 scale_mode_parser.addArgument(['root'], {help: 'The root note', choices: Object.keys(fretson.all_notes)});
 scale_mode_parser.addArgument(['name'], {help: 'The name of the scale mode',});
+scale_mode_parser.addArgument(['--fretboard'], {
+    help: 'Shows the notes on the fretboard',
+    action: 'storeConst',
+    constant: true,
+    default: false
+});
 
 const scale_parser = commands.addParser('scale', {help: "generates a scale", addHelp: true});
 scale_parser.addArgument(['root'], {help: 'The root note', choices: Object.keys(fretson.all_notes)});
 scale_parser.addArgument(['name'], {help: 'The name of the scale', choices: Object.keys(fretson.scales)});
+scale_parser.addArgument(['--fretboard'], {
+    help: 'Shows the notes on the fretboard',
+    action: 'storeConst',
+    constant: true,
+    default: false
+});
 
 const chord_parser = commands.addParser('chord', {help: "generates a chord", addHelp: true});
 chord_parser.addArgument(['root'], {help: 'The root note', choices: Object.keys(fretson.all_notes)});
 chord_parser.addArgument(['name'], {help: 'The name of the chord', choices: Object.keys(fretson.chords)});
+chord_parser.addArgument(['--fretboard'], {
+    help: 'Shows the notes on the fretboard',
+    action: 'storeConst',
+    constant: true,
+    default: false
+});
 
 commands.addParser('list-scales', {help: "lists all the available scales", addHelp: true});
 
 const args = parser.parseArgs();
 
-switch (args.command) {
+switch (args['command']) {
     case "chord":
-        console.log(notes_to_string(fretson.notesInChord(fretson.note(args.root), args.name)));
-        break;
     case "scale":
-        console.log(notes_to_string(fretson.notesInScale(fretson.note(args.root), args.name)));
-        break;
     case "mode":
-        console.log(notes_to_string(fretson.notesInScaleMode(fretson.note(args.root), args.name)));
+        let notes = get_notes(args['command'], args['root'], args['name']);
+        if (args['fretboard']) {
+            console.log(generate_fretboard(fretson.tunings.standard, notes.map(note => note.name), 12));
+        } else {
+            console.log(notes_to_string(notes));
+        }
         break;
     case "list-scales":
         console.log(Object.keys(fretson.scales).join("\n"));
         break;
 }
 
+function get_notes(mode, root, name) {
+    switch (mode) {
+        case "chord":
+            return fretson.notesInChord(fretson.note(root), name);
+        case "scale":
+            return fretson.notesInScale(fretson.note(root), name);
+        case "mode":
+            return fretson.notesInScaleMode(fretson.note(root), name);
+    }
+    return [];
+}
+
+
+// console.log(generate_fretboard(fretson.tunings.standard, fretson.notesInScale(fretson.note("G"), "major").map(note => note.name), 12));
+
 function notes_to_string(notes) {
     return notes.map(note => note.name).reduce((acc, note) => acc + " " + note);
+}
+
+function generate_fretboard(tuning, notes, fret_count) {
+    let result = generate_fretboard_string_meta(fret_count) + "\n";
+    tuning.strings.reverse().forEach(string =>
+        result += generate_fretboard_string(string, notes, fret_count) + "\n"
+    );
+    return result;
+}
+
+function generate_fretboard_string_meta(fret_count) {
+    let meta = [' ', ' ', '.', ' ', '.', ' ', '.', ' ', '.', ' ', ' ', ':'];
+
+    let result = "    ";
+    for (i = 0; i < fret_count; ++i) {
+        result += "  " + meta[i % 13] + "   ";
+    }
+    return result;
+}
+function generate_fretboard_string(string, notes, fret_count) {
+    let note = fretson.note(string);
+    let result = " " + note.name + " |";
+    while (fret_count > 0) {
+        note = note.nextNote();
+        if (notes.indexOf(note.name) > -1) {
+            result += note.name.length == 1 ? "--" + note.name.bold.green + "--|" : "--" + note.name.bold.green + "-|";
+        } else {
+            result += "-----|";
+        }
+        fret_count -= 1;
+    }
+    return result;
 }
