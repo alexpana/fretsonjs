@@ -41,6 +41,11 @@ chord_parser.addArgument(['--fretboard'], {
 
 commands.addParser('list-scales', {help: "lists all the available scales", addHelp: true});
 
+const explain_parser = commands.addParser('explain', {help: "explains a scale / mode / chord", addHelp: true});
+explain_parser.addArgument(['what'], {help: 'What to explain', choices: ['scale', 'mode', 'chord']});
+explain_parser.addArgument(['name'], {help: 'The name of the scale / mode / chord'});
+
+
 const args = parser.parseArgs();
 
 switch (args['command']) {
@@ -58,6 +63,48 @@ switch (args['command']) {
     case "list-scales":
         console.log(Object.keys(fretson.scales).join("\n"));
         break;
+    case "explain":
+        switch (args['what']) {
+            case 'scale':
+                intervals = fretson.scales[args['name']].intervals;
+                console.log("intervals: " + interval_names(intervals));
+                console.log("steps:     " + interval_steps(intervals));
+                break;
+            case 'chord':
+                intervals = fretson.chords[args['name']].intervals;
+                console.log("intervals: " + interval_names(intervals));
+                break;
+            case 'mode':
+                intervals = fretson.scaleModes[args['name']].intervals;
+                console.log("intervals: " + interval_names(intervals));
+                console.log("steps:     " + interval_steps(intervals));
+                break;
+        }
+        break;
+}
+
+function interval_names(intervals) {
+    return intervals.map(interval => fretson.intervals[interval].short).join(" ");
+}
+
+function interval_steps(intervals) {
+    function step(distance) {
+        switch (distance) {
+            case 1:
+                return "h";
+            case 2:
+                return "w";
+            default:
+                return distance;
+        }
+    }
+
+    let result = [];
+    for (i = 1; i < intervals.length; ++i) {
+        result.push(step(intervals[i] - intervals[i - 1]));
+    }
+    result.push(step(12 - intervals[intervals.length - 1]));
+    return result.join(" ");
 }
 
 function get_notes(mode, root, name) {
