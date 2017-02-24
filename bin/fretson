@@ -2,19 +2,46 @@
 
 let fretson = require("../");
 
-let mode = process.argv[2];
-let note = fretson.note(process.argv[3]);
-let scale = process.argv[4];
+const ArgumentParser = require('argparse').ArgumentParser;
+const parser = new ArgumentParser({
+    version: fretson.version,
+    addHelp: true,
+    description: 'Generates chords and scales with fretboard visualization'
+});
+const commands = parser.addSubparsers({
+    title: 'commands',
+    dest: 'command',
+    metavar: ''
+});
 
-switch (mode) {
+const scale_mode_parser = commands.addParser('mode', {help: "generates a scale mode", addHelp: true});
+scale_mode_parser.addArgument(['root'], {help: 'The root note', choices: Object.keys(fretson.all_notes)});
+scale_mode_parser.addArgument(['name'], {help: 'The name of the scale mode',});
+
+const scale_parser = commands.addParser('scale', {help: "generates a scale", addHelp: true});
+scale_parser.addArgument(['root'], {help: 'The root note', choices: Object.keys(fretson.all_notes)});
+scale_parser.addArgument(['name'], {help: 'The name of the scale', choices: Object.keys(fretson.scales)});
+
+const chord_parser = commands.addParser('chord', {help: "generates a chord", addHelp: true});
+chord_parser.addArgument(['root'], {help: 'The root note', choices: Object.keys(fretson.all_notes)});
+chord_parser.addArgument(['name'], {help: 'The name of the chord', choices: Object.keys(fretson.chords)});
+
+commands.addParser('list-scales', {help: "lists all the available scales", addHelp: true});
+
+const args = parser.parseArgs();
+
+switch (args.command) {
     case "chord":
-        console.log(notes_to_string(fretson.notesInChord(note, scale)));
+        console.log(notes_to_string(fretson.notesInChord(fretson.note(args.root), args.name)));
         break;
     case "scale":
-        console.log(notes_to_string(fretson.notesInScale(note, scale)));
+        console.log(notes_to_string(fretson.notesInScale(fretson.note(args.root), args.name)));
         break;
     case "mode":
-        console.log(notes_to_string(fretson.notesInScaleMode(note, scale)));
+        console.log(notes_to_string(fretson.notesInScaleMode(fretson.note(args.root), args.name)));
+        break;
+    case "list-scales":
+        console.log(Object.keys(fretson.scales).join("\n"));
         break;
 }
 

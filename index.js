@@ -7,34 +7,66 @@ module.exports = new function () {
     this.tunings = {
         standard: {name: "Standard", representation: "E-A-D-G-B-E", strings: ["E2", "A2", "D3", "G3", "B3", "E4"]},
         drop_d: {name: "Drop D", representation: "D-A-D-G-B-E", strings: ["D2", "A2", "D3", "G3", "B3", "E4"]},
-        double_drop_d: {name: "Double Drop D", representation: "D-A-D-G-B-D", strings: ["D2", "A2", "D3", "G3", "B3", "D4"]},
-        d_modal_tuning: {name: "D Modal Tuning", representation: "D-A-D-G-A-D", strings: ["D2", "A2", "D3", "G3", "A3", "D4"]},
+        double_drop_d: {
+            name: "Double Drop D",
+            representation: "D-A-D-G-B-D",
+            strings: ["D2", "A2", "D3", "G3", "B3", "D4"]
+        },
+        d_modal_tuning: {
+            name: "D Modal Tuning",
+            representation: "D-A-D-G-A-D",
+            strings: ["D2", "A2", "D3", "G3", "A3", "D4"]
+        },
         drop_c: {name: "Drop C", representation: "C-G-C-F-A-D", strings: ["C2", "G2", "C3", "F3", "A3", "D4"]},
         drop_b: {name: "Dropped B", representation: "B-F#-B-E-G#-C#", strings: ["B2", "F#2", "B3", "E3", "G#3", "C#4"]},
         drop_a: {name: "Dropped A", representation: "A-E-A-D-F#-A", strings: ["A2", "E2", "A3", "D3", "F#3", "A4"]},
         a_tuning: {name: "A Tuning", representation: "A-D-G-C-E-A", strings: ["A2", "D2", "G3", "C3", "E2", "A4"]},
-        eb_tuning: {name: "Eb Tuning", representation: "Eb-Ab-Db-Gb-Bb-Eb", strings: ["Eb2", "Ab2", "Db3", "Gb3", "Bb3", "Eb4"]},
+        eb_tuning: {
+            name: "Eb Tuning",
+            representation: "Eb-Ab-Db-Gb-Bb-Eb",
+            strings: ["Eb2", "Ab2", "Db3", "Gb3", "Bb3", "Eb4"]
+        },
         d_tuning: {name: "D Tuning", representation: "D-G-C-F-A-D", strings: ["D2", "G2", "C3", "F3", "A3", "D4"]},
-        db_tuning: {name: "Db Tuning", representation: "Db-Gb-Cb-Fb-Ab-Db", strings: ["Db2", "Gb2", "Cb3", "Fb3", "Ab3", "Db4"]},
+        db_tuning: {
+            name: "Db Tuning",
+            representation: "Db-Gb-Cb-Fb-Ab-Db",
+            strings: ["Db2", "Gb2", "Cb3", "Fb3", "Ab3", "Db4"]
+        },
         c: {name: "C Tuning", representation: "C-F-Bb-Eb-G-C", strings: ["C2", "F2", "Bb3", "Eb3", "G3", "C4"]},
-        b_standard: {name: "B Standard Tuning", representation: "B-E-A-D-F#-B", strings: ["B2", "E2", "A3", "D3", "F#3", "B4"]},
-        bb: {name: "Bb Tuning", representation: "Eb-Ab-Db-Gb-Bb-Eb", strings: ["Eb2", "Ab2", "Db3", "Gb3", "Bb3", "Eb4"]},
+        b_standard: {
+            name: "B Standard Tuning",
+            representation: "B-E-A-D-F#-B",
+            strings: ["B2", "E2", "A3", "D3", "F#3", "B4"]
+        },
+        bb: {
+            name: "Bb Tuning",
+            representation: "Eb-Ab-Db-Gb-Bb-Eb",
+            strings: ["Eb2", "Ab2", "Db3", "Gb3", "Bb3", "Eb4"]
+        },
         g: {name: "G Tuning", representation: "Eb-Ab-Db-Gb-Bb-Eb", strings: ["Eb2", "Ab2", "Db3", "Gb3", "Bb3", "Eb4"]},
         open_a: {name: "Open A Tuning", representation: "E-A-E-A-C#-E", strings: ["E2", "A2", "E3", "A3", "C#3", "E4"]},
         open_c: {name: "Open C Tuning", representation: "C-G-C-G-C-E", strings: ["C2", "G2", "C3", "G3", "C3", "E4"]},
         open_d: {name: "Open D Tuning", representation: "D-A-D-F#-A-D", strings: ["D2", "A2", "D3", "F#3", "A3", "D4"]},
-        open_db: {name: "Open Db Tuning", representation: "Db-Ab-Db-F-Ab-Db", strings: ["Db2", "Ab2", "Db3", "F3", "Ab3", "Db4"]},
+        open_db: {
+            name: "Open Db Tuning",
+            representation: "Db-Ab-Db-F-Ab-Db",
+            strings: ["Db2", "Ab2", "Db3", "F3", "Ab3", "Db4"]
+        },
         open_e: {name: "Open E Tuning", representation: "E-B-E-G#-B-E", strings: ["E2", "B2", "E3", "G#3", "B3", "E4"]},
         open_f: {name: "Open F Tuning", representation: "F-A-C-F-C-F", strings: ["F2", "A2", "C3", "F3", "C3", "F4"]},
         open_g: {name: "Open G Tuning", representation: "D-G-D-G-B-D", strings: ["D2", "G2", "D3", "G3", "B3", "D4"]},
-        six_string_bass: {name: "6-string Bass", representation: "B-E-A-D-G-C", strings: ["B2", "E2", "A3", "D3", "G3", "C4"]},
+        six_string_bass: {
+            name: "6-string Bass",
+            representation: "B-E-A-D-G-C",
+            strings: ["B2", "E2", "A3", "D3", "G3", "C4"]
+        },
 
     };
 
     this.ordered_notes = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
     this.all_notes = {
-        "C": 0, "C#": 1, "Db": 1, "D": 2, "D#": 3, "Eb": 3, "E": 4, "E#": 4, "Fb": 4, "F": 5, "F#": 6,
-        "Gb": 6, "G": 7, "G#": 8, "Ab": 8, "A": 9, "A#": 10, "Bb": 10, "B": 11, "Cb": 11
+        "C": 0, "C#": 1, "Db": 1, "D": 2, "D#": 3, "Eb": 3, "E": 4, "E#": 5, "Fb": 4, "F": 5, "F#": 6,
+        "Gb": 6, "G": 7, "G#": 8, "Ab": 8, "A": 9, "A#": 10, "Bb": 10, "B": 11, "B#": 12, "Cb": 11
     };
 
     //noinspection SpellCheckingInspection
@@ -297,7 +329,7 @@ module.exports = new function () {
         addSemitones(semitones) {
             let octaveDistance = Number.parseInt(semitones / 12);
             let noteDistance = semitones % 12;
-            const noteIndex = fretson.ordered_notes.indexOf(this.name);
+            const noteIndex = fretson.all_notes[this.name];
 
             if (noteIndex + noteDistance >= 12) {
                 noteDistance -= 12;
