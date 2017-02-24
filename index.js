@@ -37,6 +37,7 @@ exports.fretson = new function () {
         "Gb": 6, "G": 7, "G#": 8, "Ab": 8, "A": 9, "A#": 10, "Bb": 10, "B": 11, "Cb": 11
     };
 
+    //noinspection SpellCheckingInspection
     this.scales = {
         major: {name: "Major", intervals: [0, 2, 4, 5, 7, 9, 11]},
         harmonic_minor: {name: "Harmonic Minor", intervals: [0, 2, 3, 5, 7, 8, 11]},
