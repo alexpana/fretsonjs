@@ -19,6 +19,9 @@
   "bugs": {
     "url": "https://github.com/alexpana/fretsonjs/issues"
   },
+  "bin": {
+    "fretson": "./bin/fretson"
+  },
   "homepage": "https://github.com/alexpana/fretsonjs#readme",
   "devDependencies": {
     "mocha": "^3.1.2"
