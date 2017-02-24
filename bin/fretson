@@ -17,7 +17,7 @@ const commands = parser.addSubparsers({
 
 const scale_mode_parser = commands.addParser('mode', {help: "generates a scale mode", addHelp: true});
 scale_mode_parser.addArgument(['root'], {help: 'The root note', choices: Object.keys(fretson.all_notes)});
-scale_mode_parser.addArgument(['name'], {help: 'The name of the scale mode',});
+scale_mode_parser.addArgument(['name'], {help: 'The name of the scale mode', choices: Object.keys(fretson.scaleModes)});
 scale_mode_parser.addArgument(['--fretboard'], {
     help: 'Shows the notes on the fretboard',
     default: 0
