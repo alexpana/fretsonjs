@@ -1,9 +1,14 @@
 #!/usr/bin/env node
 
-let fretson = require("../");
-let colors = require('colors');
+//noinspection JSUnresolvedFunction
+const fretson = require("../");
 
+//noinspection JSUnresolvedFunction
+const colors = require('colors');
+
+//noinspection JSUnresolvedFunction
 const ArgumentParser = require('argparse').ArgumentParser;
+
 const parser = new ArgumentParser({
     version: fretson.version,
     addHelp: true,
@@ -103,10 +108,11 @@ function interval_names(intervals) {
     return intervals.map(interval => fretson.intervals[interval].short).join(" ");
 }
 
+//noinspection JSUnusedLocalSymbols
 function tuning_difference(first_tuning, second_tuning) {
-    // TODO: make sure this works
+    // TODO: make sure tunings are accurate for this to work
     let diff = [];
-    for (i = 0; i < first_tuning.strings.length; ++i) {
+    for (let i = 0; i < first_tuning.strings.length; ++i) {
         diff.push(left_pad("" + fretson.note(first_tuning.strings[i]).semitonesTo(fretson.note(second_tuning.strings[i])), 4));
     }
     return diff.join("");
@@ -125,7 +131,7 @@ function interval_steps(intervals) {
     }
 
     let result = [];
-    for (i = 1; i < intervals.length; ++i) {
+    for (let i = 1; i < intervals.length; ++i) {
         result.push(step(intervals[i] - intervals[i - 1]));
     }
     result.push(step(12 - intervals[intervals.length - 1]));
@@ -160,7 +166,7 @@ function generate_fretboard_string_meta(fret_count) {
     let meta = [' ', ' ', '.', ' ', '.', ' ', '.', ' ', '.', ' ', ' ', ':'];
 
     let result = "    ";
-    for (i = 0; i < fret_count; ++i) {
+    for (let i = 0; i < fret_count; ++i) {
         result += "  " + meta[i % 12] + "   ";
     }
     return result;
