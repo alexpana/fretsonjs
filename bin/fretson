@@ -60,13 +60,13 @@ switch (args['command']) {
         }
         break;
     case "list-scales":
-        console.log(Object.keys(fretson.scales).map(scale => right_pad(scale, 30) + interval_names(fretson.scales[scale].intervals)).join("\n"));
+        console.log(Object.keys(fretson.scales).sort().map(scale => right_pad(scale, 30) + interval_names(fretson.scales[scale].intervals)).join("\n"));
         break;
     case "list-chords":
-        console.log(Object.keys(fretson.chords).join("\n"));
+        console.log(Object.keys(fretson.chords).sort().join("\n"));
         break;
     case "list-tunings":
-        console.log(Object.keys(fretson.tunings).map(tuning => right_pad(fretson.tunings[tuning].name, 20) + fretson.tunings[tuning].representation.split("-").join(" ")).join("\n"));
+        console.log(Object.keys(fretson.tunings).sort().map(tuning => right_pad(fretson.tunings[tuning].name, 20) + fretson.tunings[tuning].representation.split("-").join(" ")).join("\n"));
         break;
     case "explain":
         switch (args['what']) {
