@@ -165,7 +165,18 @@ describe('Fretson', function () {
     describe('tuningForName', function () {
         it('works', function () {
             assert.equal(fretson.tuningFromName("Drop D"), fretson.tunings.drop_d);
-            assert.equal(fretson.tuningFromName("Drop D"), fretson.tunings.drop_d);
+        });
+        it('works with lowercase', function() {
+            "use strict";
+            assert.equal(fretson.tuningFromName('standard'), fretson.tunings.standard);
+            assert.equal(fretson.tuningFromName('drop d'), fretson.tunings.drop_d);
+
+        });
+        it('works without spaces', function() {
+            "use strict";
+            assert.equal(fretson.tuningFromName('dropd'), fretson.tunings.drop_d);
+            assert.equal(fretson.tuningFromName('opena'), fretson.tunings.open_a);
+
         });
     });
 });
