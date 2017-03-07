@@ -33,7 +33,7 @@ show_parser.addArgument(['--tuning'], {
     help: 'Shows the notes on the fretboard, up to FRET number of frets',
     metavar: "TUNING",
     choices: Object.keys(fretson.tunings).map(tuning => fretson.tunings[tuning].name),
-    default: "Standard"
+    defaultValue: "Standard"
 });
 
 commands.addParser('list-scales', {help: "lists all the available scales", addHelp: true});
